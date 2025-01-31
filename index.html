@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>傅里叶变换可视化 | Fourier Transform Visualizer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2196F3;
+            --secondary-color: #FF4081;
+            --background-color: #f5f5f7;
+            --card-background: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-radius: 16px;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--background-color);
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .visualization-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .canvas-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow-md);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canvas-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .canvas-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .canvas-card:hover::after {
+            transform: translateX(100%);
+        }
+
+        .canvas-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .canvas-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        canvas {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            background: #fafafa;
+        }
+
+        .controls-container {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .wave-selector {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .wave-button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: #f0f0f0;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wave-button:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .wave-button.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .value-display {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .control-group:hover .value-display {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            -webkit-appearance: none;
+            background: #e0e0e0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3);
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        input[type="range"]:hover {
+            background: var(--primary-color);
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .visualization-container {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>傅里叶变换可视化</h1>
+            <p class="subtitle">探索不同波形的频域分析与时域表现</p>
+        </header>
+
+        <div class="visualization-container">
+            <div class="canvas-card">
+                <div class="canvas-header">
+                    <div class="canvas-title">时域波形</div>
+                </div>
+                <canvas id="timeCanvas"></canvas>
+            </div>
+            <div class="canvas-card">
+                <div class="canvas-header">
+                    <div class="canvas-title">频域分析</div>
+                </div>
+                <canvas id="freqCanvas"></canvas>
+            </div>
+        </div>
+
+        <div class="controls-container">
+            <div class="wave-selector">
+                <button class="wave-button active" data-wave="sine">正弦波</button>
+                <button class="wave-button" data-wave="square">方波</button>
+                <button class="wave-button" data-wave="sawtooth">锯齿波</button>
+                <button class="wave-button" data-wave="custom">自定义波形</button>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <div class="control-header">
+                        <label>谐波数量</label>
+                        <span class="value-display" id="harmonicCountValue">10</span>
+                    </div>
+                    <input type="range" id="harmonicCount" min="1" max="50" value="10">
+                </div>
+                <div class="control-group">
+                    <div class="control-header">
+                        <label>动画速度</label>
+                        <span class="value-display" id="speedValue">50</span>
+                    </div>
+                    <input type="range" id="speed" min="1" max="100" value="50">
+                </div>
+                <div class="control-group">
+                    <div class="control-header">
+                        <label>波形振幅</label>
+                        <span class="value-display" id="amplitudeValue">50</span>
+                    </div>
+                    <input type="range" id="amplitude" min="10" max="100" value="50">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="fourier.js"></script>
+</body>
+</html> 
