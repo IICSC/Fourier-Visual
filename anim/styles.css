@@ -1,0 +1,444 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a1a, #4a4a4a);
+    color: white;
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.nav-links li {
+    cursor: pointer;
+    transition: color 0.3s;
+    position: relative;
+}
+
+.nav-links li::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00ff88;
+    transition: width 0.3s;
+}
+
+.nav-links li:hover::after {
+    width: 100%;
+}
+
+.nav-links li.active {
+    color: #00ff88;
+}
+
+.hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.hero-title {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.8;
+}
+
+.scroll-indicator {
+    position: absolute;
+    bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.arrow {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.demo-section {
+    padding: 100px 20px;
+}
+
+.demo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.demo-item {
+    text-align: center;
+}
+
+.animation-box {
+    height: 200px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.animation-box:hover {
+    transform: scale(1.05);
+}
+
+.animation-box:active {
+    transform: scale(0.98);
+}
+
+.floating-element {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #ff3366, #ff6b6b);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.rotating-element {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.scaling-element {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.interactive-section {
+    padding: 100px 20px;
+    text-align: center;
+}
+
+.interactive-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.hover-card {
+    width: 300px;
+    height: 200px;
+    margin: 15px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 10px;
+    transition: transform 0.6s;
+}
+
+.card-front {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotateY(0);
+}
+
+.card-back {
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    transform: rotateY(180deg);
+    color: #1a1a1a;
+}
+
+.hover-card::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    z-index: -1;
+    border-radius: 12px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card-front h3,
+.card-back h3 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.card-front p,
+.card-back p {
+    font-size: 1rem;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.background-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.2;
+}
+
+.floating-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff3366, #ff6b6b);
+}
+
+.square {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+}
+
+.triangle {
+    width: 0;
+    height: 0;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 86.6px solid #00ff88;
+}
+
+.particle-section {
+    height: 60vh;
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    margin: 50px 0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.particle-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(45deg);
+    }
+    40% {
+        transform: translateY(-30px) rotate(45deg);
+    }
+    60% {
+        transform: translateY(-15px) rotate(45deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .nav-links {
+        gap: 15px;
+    }
+    
+    .demo-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .interactive-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .particle-section {
+        height: 40vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .nav-links {
+        display: none;  /* 在移动端可以考虑添加汉堡菜单 */
+    }
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 2px;
+    background-color: white;
+    transition: 0.3s;
+}
+
+@media (max-width: 480px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.9);
+        flex-direction: column;
+        padding: 20px;
+        transform: translateY(-100%);
+        transition: transform 0.3s;
+    }
+
+    .nav-links.active {
+        transform: translateY(0);
+    }
+}
+
+/* 添加按钮悬停效果 */
+.button {
+    padding: 12px 24px;
+    background: linear-gradient(45deg, #00ff88, #00ffcc);
+    border: none;
+    border-radius: 25px;
+    color: #1a1a1a;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+}

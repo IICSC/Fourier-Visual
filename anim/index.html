@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>炫酷动画展示</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <meta name="description" content="创意动画展示网站，展示各种精美的网页动画效果">
+    <meta name="keywords" content="动画,特效,网页动画,创意,交互">
+    <meta property="og:title" content="创意动画展示">
+    <meta property="og:description" content="探索无限可能的动画世界">
+    <link rel="canonical" href="https://你的网站地址.com">
+</head>
+<body>
+    <nav class="navbar" role="navigation" aria-label="主导航">
+        <div class="logo" role="banner">动画展示</div>
+        <button class="menu-toggle" aria-label="菜单" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links">
+            <li class="active">首页</li>
+            <li>动画</li>
+            <li>特效</li>
+            <li>关于</li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1 class="hero-title">创意动画展示</h1>
+        <p class="hero-subtitle">探索无限可能的动画世界</p>
+        <div class="scroll-indicator">
+            <span>向下滚动</span>
+            <div class="arrow"></div>
+        </div>
+    </header>
+
+    <section class="demo-section">
+        <h2 class="section-title">基础动画</h2>
+        <div class="demo-container">
+            <div class="demo-item">
+                <div class="animation-box">
+                    <div class="floating-element"></div>
+                </div>
+                <h3>浮动动画</h3>
+                <p>平滑的上下浮动效果</p>
+            </div>
+            
+            <div class="demo-item">
+                <div class="animation-box">
+                    <div class="rotating-element"></div>
+                </div>
+                <h3>旋转动画</h3>
+                <p>持续的旋转变换</p>
+            </div>
+            
+            <div class="demo-item">
+                <div class="animation-box">
+                    <div class="scaling-element"></div>
+                </div>
+                <h3>缩放动画</h3>
+                <p>动态大小变化</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="interactive-section">
+        <h2 class="section-title">交互动画</h2>
+        <div class="interactive-container">
+            <div class="hover-card">
+                <div class="card-front">
+                    <h3>悬停效果</h3>
+                    <p>移动鼠标查看效果</p>
+                </div>
+                <div class="card-back">
+                    <h3>惊喜！</h3>
+                    <p>3D翻转效果</p>
+                </div>
+            </div>
+            <div class="hover-card">
+                <div class="card-front">
+                    <h3>渐变动画</h3>
+                    <p>移动鼠标查看效果</p>
+                </div>
+                <div class="card-back">
+                    <h3>炫彩！</h3>
+                    <p>色彩渐变效果</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="particle-section">
+        <h2 class="section-title">粒子效果</h2>
+        <div class="particle-container" id="particles"></div>
+    </section>
+
+    <div class="background-shapes">
+        <div class="shape circle"></div>
+        <div class="shape square"></div>
+        <div class="shape triangle"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
